@@ -68,7 +68,7 @@ header {
 
 main {
   max-width: 32rem;
-  margin: 4rem auto; /* Increased top margin to account for header */
+  margin: 1rem auto; /* Reduced top margin */
   padding: 1.5rem;
   position: relative; /* Establish stacking context */
   z-index: 1; /* Ensure content is below header */
@@ -100,7 +100,7 @@ label {
 .password-container {
   position: relative;
   display: flex;
-  align-items: center;
+  margin-bottom: 1rem;
 }
 
 input[type="password"],
@@ -111,7 +111,6 @@ input[type="text"] { /* Style both password and text types */
   border: 1px solid var(--border);
   border-radius: 4px;
   box-sizing: border-box;
-  margin-bottom: 1rem;
   background: var(--bg);
   color: var(--fg);
 }
@@ -126,6 +125,8 @@ input:focus {
 .toggle-password {
   position: absolute;
   right: 10px; /* Position inside the input */
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;

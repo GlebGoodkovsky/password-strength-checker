@@ -5,21 +5,20 @@ const pw = document.getElementById('pw');
 const meter = document.getElementById('meter');
 const label = document.getElementById('label');
 const crack = document.getElementById('crack');
+const warningEl = document.getElementById('warning');
 const suggBox = document.getElementById('suggestions');
 const themeToggle = document.getElementById('themeToggle');
-const togglePasswordButton = document.getElementById('togglePassword'); // Assuming this ID exists in your HTML
+const togglePasswordButton = document.getElementById('togglePassword');
 
 // --- Password Visibility Toggle ---
-// Ensure the toggle button and password field exist
 if (togglePasswordButton && pw) {
+    const eyeIcon = togglePasswordButton.querySelector('.eye-icon');
     togglePasswordButton.addEventListener('click', function () {
-        // Toggle between password and text types
         const type = pw.getAttribute('type') === 'password' ? 'text' : 'password';
         pw.setAttribute('type', type);
-
-        // Update button text/emoji for visual feedback
-        // Use closed eye for hidden password, open eye for visible
-        this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+        if (eyeIcon) {
+            eyeIcon.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+        }
         this.setAttribute('aria-label', type === 'password' ? 'Show password' : 'Hide password');
     });
 } else {
@@ -27,7 +26,6 @@ if (togglePasswordButton && pw) {
 }
 
 // --- Theme Toggle Functionality ---
-// Strength meter color mapping (from your original code)
 const colors = [
     '#dc3545', // red - Very weak
     '#ff6b6b', // light red - Weak
@@ -36,18 +34,14 @@ const colors = [
     '#20c997'  // teal - Very strong
 ];
 
-// Update theme icon based on current theme
 function updateThemeIcon(theme) {
-    // Use moon for light mode (switching TO dark), sun for dark mode (switching TO light)
     themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
-// Set initial theme based on saved preference or system preference
 (function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    let initialTheme = 'light'; // Default
+    let initialTheme = 'light';
 
     if (savedTheme) {
         initialTheme = savedTheme;
@@ -59,11 +53,9 @@ function updateThemeIcon(theme) {
     updateThemeIcon(initialTheme);
 })();
 
-// Toggle theme when button is clicked
 themeToggle.addEventListener('click', function () {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateThemeIcon(newTheme);
@@ -77,6 +69,7 @@ function render() {
         label.textContent = 'Strength: —';
         label.style.color = '';
         crack.textContent = '';
+        warningEl.textContent = '';
         suggBox.innerHTML = '';
         return;
     }
@@ -84,35 +77,43 @@ function render() {
     try {
         const z = zxcvbn(val);
         const score = z.score;
-
+        const strengthLabels = [
+            'Very Weak', 
+            'Weak', 
+            'Fair', 
+            'Strong', 
+            'Very Strong'
+        ];
+        
         meter.value = score;
-        // Use the text labels from your original code
-        const strengthLabels = ['Very weak', 'Weak', 'Moderate', 'Strong', 'Very strong'];
         label.textContent = `Strength: ${strengthLabels[score]}`;
-        label.style.color = colors[score];
+        label.className = `score-${score}`;
 
-        // Use the crack time calculation from your original code
-        crack.textContent = `Estimated crack time: ${z.crack_times_display.offline_slow_hashing_1e4_per_second}`;
+        crack.textContent = `Estimated time to crack: ${z.crack_times_display.offline_slow_hashing_1e4_per_second}`;
+        warningEl.textContent = z.feedback.warning || '';
 
-        // Process suggestions, filtering out empty ones
-        const items = (z.feedback.suggestions || [])
-            .filter(s => s.trim() !== '')
-            .map(s => `<li>${s}</li>`)
-            .join('');
+        const suggestions = z.feedback.suggestions || [];
+        if (suggestions.length > 0 && val.length > 0) {
+            const items = suggestions
+                .filter(s => s && s.trim() !== '')
+                .map(s => `<li>${s}</li>`)
+                .join('');
+            
+            suggBox.innerHTML = items ? `<strong>Suggestions to improve:</strong><ul>${items}</ul>` : '';
+        } else {
+            suggBox.innerHTML = '';
+        }
 
-        // Display suggestions or a default message
-        suggBox.innerHTML = items || '<li>No specific suggestions. Keep your password unique!</li>';
     } catch (e) {
         console.error("Error calculating password strength:", e);
-        // Optionally, display an error message in the UI
         label.textContent = 'Strength: Error';
-        label.style.color = colors[0]; // Red for error
+        label.className = 'score-0';
         crack.textContent = '';
-        suggBox.innerHTML = '<li>Error analyzing password. Please try again.</li>';
+        warningEl.textContent = 'An error occurred while analyzing the password.';
+        suggBox.innerHTML = '';
     }
 }
 
-// Attach the render function to the password input's 'input' event
 if (pw) {
     pw.addEventListener('input', render);
 } else {
