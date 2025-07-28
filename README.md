@@ -45,19 +45,6 @@ The password analysis happens entirely in your browser using fundamental web tec
 - **[zxcvbn](https://github.com/dropbox/zxcvbn)** - Dropbox's password strength estimation library (MIT licensed)
 - **GitHub Pages** - Static hosting with automatic SSL
 
-### Security Architecture
-```mermaid
-graph LR
-    A[User Input] --> B[Browser]
-    B --> C[zxcvbn Analysis]
-    C --> D[Local Results]
-    D --> E[Visual Feedback]
-    style A stroke:#4CAF50,stroke-width:2px
-    style B stroke:#2196F3,stroke-width:2px
-    style C stroke:#FF9800,stroke-width:2px
-    style D stroke:#9C27B0,stroke-width:2px
-    style E stroke:#E91E63,stroke-width:2px
-
 ---
 
 ## 🚀 How to Use
@@ -116,38 +103,6 @@ git push -u origin main
 
 Your site will be live at:  
 `https://YOUR_USERNAME.github.io/password-strength-checker/`
-
----
-
-## 🔧 Customization Options
-
-Edit these files to customize the application:
-
-1. **Visual Style** (`css/main.css`):
-   ```css
-   :root {
-     --primary: #6f42c1;       /* Main purple color */
-     --weak-color: #dc3545;    /* Red for weak passwords */
-     --strong-color: #28a745;  /* Green for strong passwords */
-   }
-   ```
-
-2. **Strength Labels** (`js/checker.js`):
-   ```javascript
-   const texts = [
-     'Very weak',   // Score 0
-     'Weak',        // Score 1
-     'Moderate',    // Score 2
-     'Strong',      // Score 3
-     'Very strong'  // Score 4
-   ];
-   ```
-
-3. **Theme Settings** (`js/checker.js`):
-   ```javascript
-   // Change default theme preference
-   const savedTheme = localStorage.getItem('theme') || 'dark';
-   ```
 
 ---
 
