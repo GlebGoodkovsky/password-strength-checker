@@ -1,32 +1,31 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <title>Private Password Strength Checker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="stylesheet" href="css/main.css"/>
+    <meta charset="utf-8"/>
+    <title>Private Password Strength Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
-  <main>
+<main>
     <h1>Password Strength Checker</h1>
     <p class="tagline">Nothing you type is sent anywhere.</p>
-
     <label for="pw">Enter a password</label>
-    <input id="pw" type="password" autocomplete="new-password" aria-describedby="result"/>
-
+    <div class="password-container">
+        <input id="pw" type="password" autocomplete="new-password" aria-describedby="result"/>
+        <button id="togglePassword" type="button" aria-label="Show password">👁</button>
+    </div>
     <section id="result" aria-live="polite">
-      <meter id="meter" min="0" max="4" value="0"></meter>
-      <span id="label">Strength: —</span>
-      <p id="crack"></p>
-      <ul id="suggestions"></ul>
+        <meter id="meter" min="0" max="4" value="0"></meter>
+        <span id="label">Strength: —</span>
+        <p id="crack"></p>
+        <ul id="suggestions"></ul>
     </section>
-  </main>
-
-  <footer>
+</main>
+<footer>
     <button id="themeToggle" aria-label="Toggle dark mode">🌗</button>
-  </footer>
-
-  <script src="js/zxcvbn.js"></script>
-  <script src="js/checker.js"></script>
+</footer>
+<script src="js/zxcvbn.js"></script>
+<script src="js/checker.js"></script>
 </body>
 </html>
