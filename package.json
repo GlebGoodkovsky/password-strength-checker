@@ -1,0 +1,35 @@
+{
+  "name": "pw-checker",
+  "version": "1.0.0",
+  "description": "A privacy-first, client-side password analyzer that evaluates password strength locally in your browser. No network calls, no data collection - your passwords never leave your device.",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=8080 --entry-file=index.html",
+    "dev": "npm start",
+    "build": "node update-html.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d ."
+  },  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GlebGoodkovsky/password-strength-checker.git"
+  },
+  "keywords": [
+    "password",
+    "strength",
+    "checker",
+    "static",
+    "github-pages"
+  ],
+  "author": "wiphz",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/GlebGoodkovsky/password-strength-checker/issues"
+  },
+  "homepage": "https://GlebGoodkovsky.github.io/password-strength-checker/",
+  "devDependencies": {
+    "gh-pages": "^x.y.z",
+    "live-server": "^x.y.z"
+  }
+}
