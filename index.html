@@ -1,31 +1,45 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light"> <!-- Theme attribute will be managed by JS -->
 <head>
-    <meta charset="utf-8"/>
-    <title>Private Password Strength Checker</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="css/main.css"/>
+  <meta charset="utf-8" />
+  <title>Private Password Strength Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-<main>
+  <header>
+    <div class="theme-toggle-container">
+      <!-- Theme toggle button moved to top right -->
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span> <!-- Icon updated by JS -->
+      </button>
+    </div>
+  </header>
+  <main>
     <h1>Password Strength Checker</h1>
     <p class="tagline">Nothing you type is sent anywhere.</p>
-    <label for="pw">Enter a password</label>
-    <div class="password-container">
-        <input id="pw" type="password" autocomplete="new-password" aria-describedby="result"/>
-        <button id="togglePassword" type="button" aria-label="Show password">👁</button>
+    
+    <!-- Password input group with visibility toggle -->
+    <div class="input-group">
+      <label for="pw">Enter a password</label>
+      <div class="password-container">
+        <input id="pw" type="password" autocomplete="new-password" aria-describedby="result" placeholder="Enter password" />
+        <!-- Password visibility toggle button -->
+        <button id="togglePassword" class="toggle-password" type="button" aria-label="Show password">
+          <span class="eye-icon">👁️</span> <!-- Eye icon updated by JS -->
+        </button>
+      </div>
     </div>
+
     <section id="result" aria-live="polite">
-        <meter id="meter" min="0" max="4" value="0"></meter>
-        <span id="label">Strength: —</span>
-        <p id="crack"></p>
-        <ul id="suggestions"></ul>
+      <meter id="meter" min="0" max="4" value="0"></meter>
+      <span id="label">Strength: —</span>
+      <p id="crack"></p>
+      <ul id="suggestions"></ul>
     </section>
-</main>
-<footer>
-    <button id="themeToggle" aria-label="Toggle dark mode">🌗</button>
-</footer>
-<script src="js/zxcvbn.js"></script>
-<script src="js/checker.js"></script>
+  </main>
+
+  <script src="js/zxcvbn.js"></script>
+  <script src="js/checker.js"></script> <!-- Updated JS file -->
 </body>
 </html>

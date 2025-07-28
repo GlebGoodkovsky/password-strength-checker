@@ -1,122 +1,232 @@
 :root {
-    --bg: #ffffff;
-    --fg: #222;
-    --border: #ccc;
-    --primary: #007bff;
+  --bg: #ffffff;
+  --fg: #222;
+  --border: #ccc;
+  --primary: #007bff;
+  --shadow: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
-    --bg: #1e1e1e;
-    --fg: #eee;
-    --border: #444;
-    --primary: #0d6efd;
+  --bg: #1e1e1e;
+  --fg: #eee;
+  --border: #444;
+  --primary: #0d6efd;
+  --shadow: rgba(0, 0, 0, 0.3);
 }
 
 body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.5;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+  position: relative; /* Needed for absolute positioning of header elements */
 }
 
+/* --- Theme Toggle Styling --- */
+header {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+}
+
+.theme-toggle-container {
+  position: relative;
+}
+
+.theme-toggle {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px var(--shadow);
+  transition: all 0.3s ease;
+  font-size: 1.2rem; /* Adjust icon size */
+  padding: 0; /* Reset default button padding */
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.theme-icon {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(15deg);
+}
+/* --- End Theme Toggle Styling --- */
+
+
 main {
-    max-width: 32rem;
-    margin: 4rem auto;
-    padding: 1.5rem;
+  max-width: 32rem;
+  margin: 4rem auto; /* Increased top margin to account for header */
+  padding: 1.5rem;
+  position: relative; /* Establish stacking context */
+  z-index: 1; /* Ensure content is below header */
 }
 
 h1 {
-    margin-top: 0;
-    font-size: 1.8rem;
+  margin-top: 0;
+  font-size: 1.8rem;
 }
 
 .tagline {
-    color: #666;
-    font-style: italic;
-    margin-top: -0.5rem;
+  color: #666;
+  font-style: italic;
+  margin-top: -0.5rem;
+}
+
+/* --- Password Input and Toggle Styling --- */
+.input-group {
+  margin-bottom: 1.5rem;
 }
 
 label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
+/* Container for password input and toggle button */
 .password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 input[type="password"],
-input[type="text"] {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1.1rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-    padding-right: 3rem; /* Space for the toggle button */
+input[type="text"] { /* Style both password and text types */
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  background: var(--bg);
+  color: var(--fg);
 }
 
-#togglePassword {
-    position: absolute;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: var(--fg);
-    opacity: 0.7;
-    transition: opacity 0.2s;
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
-#togglePassword:hover {
-    opacity: 1;
+/* Style the password visibility toggle button */
+.toggle-password {
+  position: absolute;
+  right: 10px; /* Position inside the input */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem; /* Adjust icon size */
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.toggle-password:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .toggle-password:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* --- End Password Input Styling --- */
+
 
 #result {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.03);
-    border-radius: 4px;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
 }
 
+[data-theme="dark"] #result {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+
 meter {
-    width: 100%;
-    height: 0.75rem;
+  width: 100%;
+  height: 0.75rem;
 }
 
 #label {
-    display: block;
-    margin: 0.5rem 0;
-    font-weight: 600;
-    font-size: 1.1rem;
+  display: block;
+  margin: 0.5rem 0;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 #crack {
-    margin: 0.5rem 0;
-    font-size: 0.9rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
 }
 
 #suggestions {
-    padding-left: 1.2rem;
-    margin-top: 0.5rem;
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
 }
 
 #suggestions li {
-    margin-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
-button {
-    border: none;
-    background: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--fg);
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+/* --- Strength Meter Colors (from original) --- */
+/* These classes are applied dynamically by JS */
+.score-0 { color: #dc3545 !important; } /* red - Very weak */
+.score-1 { color: #ff6b6b !important; } /* light red - Weak */
+.score-2 { color: #ffc107 !important; } /* yellow - Moderate/Fair */
+.score-3 { color: #28a745 !important; } /* green - Strong */
+.score-4 { color: #20c997 !important; } /* teal - Very strong */
+
+.strength-meter {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .strength-meter {
+  background-color: #3d3d3d;
+}
+
+.strength-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Strength colors for the fill bar */
+.score-0 .strength-fill { background-color: #dc3545; } /* Weak */
+.score-1 .strength-fill { background-color: #fd7e14; } /* Fair */
+.score-2 .strength-fill { background-color: #ffc107; } /* Good */
+.score-3 .strength-fill { background-color: #20c997; } /* Strong */
+.score-4 .strength-fill { background-color: #28a745; } /* Very Strong */
+/* --- End Strength Meter Colors --- */
+
+
+.warning {
+  color: #dc3545;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+[data-theme="dark"] .warning {
+  color: #ff6b6b;
 }
